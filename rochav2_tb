@@ -1,0 +1,92 @@
+module ALU_tb;
+    // Declaração de variáveis de entrada
+    reg [7:0] A, B;
+    reg [3:0] ALU_Sel;
+    
+    // Declaração de variáveis de saída
+    wire [7:0] C;
+    wire [6:0] Flags;
+    wire [1:0] comparacao_resultado;
+    wire ALU_Cout;
+    
+    // Instanciação do módulo ALU
+    ALU alu_inst (
+        .A(A), 
+        .B(B), 
+        .ALU_Sel(ALU_Sel), 
+        .C(C), 
+        .Flags(Flags), 
+        .comparacao_resultado(comparacao_resultado), 
+        .ALU_Cout(ALU_Cout)
+    );
+
+    // Estímulos
+    initial begin
+        // Teste de Soma
+        A = 8'h0A; B = 8'h05; ALU_Sel = 4'h0;  // A = 10, B = 5
+        #10;  // Aguarda 10 unidades de tempo
+        $display("Soma: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+
+        // Teste de Subtração
+        A = 8'h0A; B = 8'h05; ALU_Sel = 4'h1;  // A = 10, B = 5
+        #10;
+        $display("Subtração: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+        
+        // Teste de Multiplicação
+        A = 8'h03; B = 8'h04; ALU_Sel = 4'h2;  // A = 3, B = 4
+        #10;
+        $display("Multiplicação: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+        
+        // Teste de Divisão
+        A = 8'h10; B = 8'h02; ALU_Sel = 4'h3;  // A = 16, B = 2
+        #10;
+        $display("Divisão: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+        
+        // Teste de Comparação
+        A = 8'h0A; B = 8'h05; ALU_Sel = 4'h5;  // A = 10, B = 5
+        #10;
+        $display("Comparação: A = %h, B = %h, Resultado = %b", A, B, comparacao_resultado);
+        
+        // Teste de AND
+        A = 8'h0F; B = 8'hF0; ALU_Sel = 4'h6;  // A = 15, B = 240
+        #10;
+        $display("AND: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+
+        // Teste de OR
+        A = 8'h0F; B = 8'hF0; ALU_Sel = 4'h7;  // A = 15, B = 240
+        #10;
+        $display("OR: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+
+        // Teste de NOT A
+        A = 8'hFF; B = 8'h00; ALU_Sel = 4'h8;  // A = 255, B = 0
+        #10;
+        $display("NOT A: A = %h, C = %h, Flags = %b", A, C, Flags);
+
+        // Teste de NOT B
+        A = 8'h00; B = 8'hFF; ALU_Sel = 4'h9;  // A = 0, B = 255
+        #10;
+        $display("NOT B: B = %h, C = %h, Flags = %b", B, C, Flags);
+
+        // Teste de XOR
+        A = 8'h0F; B = 8'hF0; ALU_Sel = 4'hA;  // A = 15, B = 240
+        #10;
+        $display("XOR: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+
+        // Teste de NAND
+        A = 8'h0F; B = 8'hF0; ALU_Sel = 4'hB;  // A = 15, B = 240
+        #10;
+        $display("NAND: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+
+        // Teste de NOR
+        A = 8'h0F; B = 8'hF0; ALU_Sel = 4'hC;  // A = 15, B = 240
+        #10;
+        $display("NOR: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+
+        // Teste de XNOR
+        A = 8'h0F; B = 8'hF0; ALU_Sel = 4'hD;  // A = 15, B = 240
+        #10;
+        $display("XNOR: A = %h, B = %h, C = %h, Flags = %b", A, B, C, Flags);
+
+        $finish;  // Finaliza a simulação
+    end
+endmodule
